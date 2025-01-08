@@ -1,0 +1,40 @@
+//都市の集合の宣言
+Set City;
+Element i(set=City);
+Set City2;
+Element j(set=City2);
+Set City3;
+Element k(set=City3);
+Set City4;
+Element l(set=City4);
+
+//パラメータの宣言
+Parameter distance(name="cost",index=(i,j,k,l));
+
+//変数の宣言
+//配置の有無と割り当て先
+IntegerVariable x(index=i,type=binary);
+IntegerVariable y(index=j,type=binary);
+IntegerVariable z(index=k,type=binary);
+IntegerVariable w(index=l,type=binary);
+
+//----わからないところ2----
+//目的関数の宣言
+//----変数xの総和とyの総和を最大化----
+Objective realNum(name="地点数",type=maximize,target =800000);
+realNum=sum(x[i],i)+sum(y[j],j)+sum(z[k],k)+sum(w[l],l);
+
+options.maxtim = 2400;
+
+
+//----わからないところ2----
+//----変数xの総和は1以上---
+1<=sum(x[i],i);
+1<=sum(y[j],j);
+1<=sum(z[k],k);
+1<=sum(w[l],l);
+//-------------------------
+
+distance[i,j,k,l]+x[i]+y[j]+z[k]+w[l]!=5;
+
+solve();
